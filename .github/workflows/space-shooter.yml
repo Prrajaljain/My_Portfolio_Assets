@@ -1,0 +1,23 @@
+name: Update Space Shooter GIF
+on:
+  schedule:
+    - cron: "0 0 * * *" # Updates every day at midnight
+  workflow_dispatch: # Allows you to run it manually (the "Run workflow" button)
+
+permissions:
+  contents: write # Essential for saving the GIF to your repo
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create assets directory
+        run: mkdir -p assets # Creates the 'assets' folder if it doesn't exist
+        
+      - uses: cz19707/gh-space-shooter@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          output-path: assets/space-shooter.gif
+          strategy: random
